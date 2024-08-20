@@ -72,7 +72,7 @@ export const loginUser = async (req, res, next) => {
     const getUser = await User.findOne({ email });
 
     if (!getUser) {
-      return res.status(400).json({
+      return res.json({
         success: false,
         message: "Incorrect email",
       });
@@ -80,7 +80,7 @@ export const loginUser = async (req, res, next) => {
 
     const checkAuth = await bcryptjs.compare(password, getUser.password);
     if (!checkAuth) {
-      return res.status(400).json({
+      return res.json({
         success: false,
         message: "Incorrect password",
       });
@@ -103,4 +103,16 @@ export const loginUser = async (req, res, next) => {
       message: "Something went wrong! Please try again",
     });
   }
+};
+
+export const logout = async (req, res) => {
+  res.cookie("token", "", {
+    withCredentials: true,
+    httpOnly: false,
+  });
+
+  return res.status(200).json({
+    success: true,
+    message: "Logout successfully",
+  });
 };

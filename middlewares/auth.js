@@ -9,10 +9,11 @@ export const userAuthVerification = async (req, res) => {
       success: false,
       message: "Token is not available or Invalid token",
     });
-  } else {
+  }
+  if (token) {
     try {
       const decoded = jwt.verify(token, "DEFAULT_SECRET_KEY");
-      const userInfo = await User.findById(decoded.id);
+      const userInfo = await User.findById(decoded.getId);
 
       if (userInfo) {
         return res.status(200).json({
