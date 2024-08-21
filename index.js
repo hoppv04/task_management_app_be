@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import connectDB from "./database/index.js";
 import userRouter from "./routes/user.js";
+import taskRouter from "./routes/task.js";
 
 connectDB();
 
@@ -19,6 +20,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use("/api/user", userRouter);
+app.use("/api/task", taskRouter);
 
 app.use("/api", (req, res) => {
   res.status(200).json({
